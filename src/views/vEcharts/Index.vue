@@ -1,17 +1,14 @@
 <template>
-  <v-echarts :option="option" />
+  <div style="width: 600px; height: 600px">
+    <v-chart :option="option" />
+  </div>
 </template>
 
 <script>
 import { ref } from 'vue'
-import VChart from 'vue-echarts'
-
 
 export default {
-  components: {
-    VChart
-  },
-  setup(context, props) {
+  setup() {
     const option = ref({
       title: {
         text: 'Traffic Sources',
@@ -51,12 +48,10 @@ export default {
     })
 
     return {
-      option
+      option,
     }
-  }
+  },
 }
 </script>
 
-<style>
-
-</style>
+<style></style>
