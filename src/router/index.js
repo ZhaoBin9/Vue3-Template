@@ -6,6 +6,7 @@ import BaseLayout from '@/layout/BaseLayout.vue'
 import perceptualData from './perceptualData' // 感知数据管理版块路由
 import jurisdiction from './jurisdiction' // 权限管理
 import userManage from './userManage' // 用户管理
+import MapExample from '@/views/mapExample/Index.vue'
 
 const routes = [
   {
@@ -22,6 +23,11 @@ const routes = [
         title: 'VEcharts',
         path: '/v-echarts',
         component: VEcharts,
+      },
+      {
+        title: 'MapExample',
+        path: '/map-example',
+        component: MapExample,
       },
       ...perceptualData,
       ...jurisdiction,

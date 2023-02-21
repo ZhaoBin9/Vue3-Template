@@ -1,5 +1,5 @@
 <template>
-  <div :id="mapId" class="satellite-map" ref="satelliteMap"></div>
+  <div :id="mapId" ref="satelliteMap" class="satellite-map"></div>
 </template>
 
 <script>
@@ -8,28 +8,18 @@ import mapboxgl from 'mapbox-gl'
 export default {
   name: 'SatelliteMap',
   components: {},
-  data() {
-    return {
-      mapId: 'satellite-map' + new Date().getTime(), // 地图id(每个地图实例保持唯一)
-    }
-  },
   props: {
+    center: {
+      type: Array,
+    },
     initMapbox: {
       type: Function,
     },
-    // 地图缩放级别
-    zoom: {
-      type: Number,
-      required: true,
-    },
-    pitch: {
-      type: Number,
-      default: 0,
-    },
-    center: {
-      type: Array,
-      default: () => [],
-    },
+  },
+  data() {
+    return {
+      mapId: 'satellite-map' + new Date().getTime(), // 地图id(每个地图必须唯一)
+    }
   },
   mounted() {
     this.initMap()
@@ -48,13 +38,13 @@ export default {
             'satelite-tiles': {
               type: 'raster',
               tiles: [
-                // 'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVhZGluc2lnaHQiLCJhIjoiY2wyc3BianVhMDB4MjNnbGp3dTJmaWo4eiJ9.Z8-xQKW7R7i7j_fZDUa-VQ',
-                'https://api.mapbox.com/v4/mapbox.satellite/16/{x}/{y}.jpg90?access_token=pk.eyJ1IjoibGVhZGluc2lnaHQiLCJhIjoiY2wyc3BianVhMDB4MjNnbGp3dTJmaWo4eiJ9.Z8-xQKW7R7i7j_fZDUa-VQ', // 临时替换，缓解 Static Tiles API 请求压力
+                'https://api.mapbox.com/styles/v1/mapbox/satellite-v9/tiles/256/{z}/{x}/{y}?access_token=pk.eyJ1IjoibGVhZGluc2lnaHQiLCJhIjoiY2wyc3BianVhMDB4MjNnbGp3dTJmaWo4eiJ9.Z8-xQKW7R7i7j_fZDUa-VQ',
               ],
               tileSize: 256,
             },
           },
           layers: [
+            // TODO 开发阶段注释地图服务 防止超流量
             {
               id: 'satelite',
               type: 'raster',
@@ -66,16 +56,15 @@ export default {
               id: 'deep-bg',
               type: 'background', // 背景图层
               paint: {
-                'background-color': '#ffffff',
+                'background-color': 'rgba(28, 39, 44,.5)',
               },
             },
           ],
         },
-        zoom: this.zoom,
-        pitch: this.pitch || 0,
-        minZoom: 4,
-        maxZoom: 22,
-        center: this.center.length ? this.center : [119.35357, 30.17],
+        zoom: 15,
+        minZoom: 5,
+        maxZoom: 25,
+        center: [119.15383, 31.87941],
       })
 
       mapboxInstance.on('load', () => {
@@ -87,13 +76,27 @@ export default {
 }
 </script>
 
-<style>
+<style lang="scss" scope>
 .satellite-map {
-  height: 100%;
+  height: 100% !important;
   width: 100%;
-}
 
-.mapboxgl-ctrl-logo.mapboxgl-ctrl-logo {
-  display: none;
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: block;
+    z-index: 10;
+    pointer-events: none;
+
+    box-shadow: inset 0px 0px 100px 50px rgba(9, 19, 36, 1);
+  }
+
+  .mapboxgl-ctrl-bottom-left {
+    display: none;
+  }
 }
 </style>

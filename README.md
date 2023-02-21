@@ -1,6 +1,4 @@
-# web-template-management-platform
-
-临安 AI 分析管理系统
+# vue3-web-template-management-platform
 
 ## 一、技术栈及工具库
 

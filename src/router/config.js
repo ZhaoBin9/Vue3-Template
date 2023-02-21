@@ -12,6 +12,12 @@ export const menuList = [
     key: '1',
   },
   {
+    title: 'MapExample',
+    iconName: 'yonghuguanli',
+    path: '/map-example',
+    key: '3',
+  },
+  {
     title: '感知数据管理',
     iconName: 'shujuguanli',
     key: '2',

@@ -2,6 +2,8 @@
   <router-view></router-view>
 </template>
 
-<script setup></script>
+<script setup>
+console.log(process.env)
+</script>
 
 <style scoped></style>
